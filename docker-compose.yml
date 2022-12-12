@@ -1,0 +1,51 @@
+# Version der Compose-Datei
+version: '1.0.0'
+
+# Dienste definieren
+services:
+  # Go-Programm zum Bereitstellen von Witzen
+  joke-provider-go:
+    # Verwendetes Image
+    image: svenmaerki/joke-provider-go
+    # Name des Containers
+    container_name: joke-provider-go
+    # Pfad zum Build-Kontext
+    build: .
+    # Pfad zur Datei mit Umgebungsvariablen
+    env_file: .env
+    # Container immer neu starten, falls er beendet wird oder fehlschlägt
+    restart: always
+    # Port des Hosts auf Port des Containers mappen
+    ports:
+      - 3001:3001
+    # Netzwerk verwenden
+    networks:
+      - default
+
+  # Python-Skript zum Verbrauchen von Witzen
+  joke-consumer-python:
+    # Abhängigkeit von der API (joke-provider-go)
+    depends_on:
+      - joke-provider-go
+    # Verwendetes Image
+    image: svenmaerki/joke-consumer-python
+    # Name des Containers
+    container_name: joke-consumer-python
+    # Pfad zum Build-Kontext
+    build: .
+    # Pfad zur Datei mit Umgebungsvariablen
+    env_file: .env
+    # Container immer neu starten, falls er beendet wird oder fehlschlägt
+    restart: always
+    # Port des Hosts auf Port des Containers mappen
+    ports:
+      - 5002:5002
+    # Netzwerk verwenden
+    networks:
+      - default
+
+# Netzwerk definieren
+networks:
+  default:
+    # Verwendeter Treiber
+    driver: bridge
