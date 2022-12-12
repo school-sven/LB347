@@ -4,7 +4,7 @@ FROM python:3.8
 # Arbeitsverzeichnis festlegen
 WORKDIR /app
 
-# Alle Dateien aus dem aktuellen Verzeichnis kopieren
+# Alle Dateien aus dem aktuellen Verzeichnis kopieren (ausgeschlossen die im .dockerignore aufgelisteten Files)
 COPY . .
 
 # Standardbefehl festlegen, der ausgeführt wird, wenn der Container gestartet wird

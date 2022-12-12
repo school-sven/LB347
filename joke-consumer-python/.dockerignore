@@ -1,1 +1,2 @@
+# Dockerfile wird bspw. beim COPY Command im Dockerfile ignoriert und nicht mitkopiert
 Dockerfile
